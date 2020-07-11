@@ -8,7 +8,7 @@ const defaultImage = 'https://d30y9cdsu7xlg0.cloudfront.net/png/15724-200.png';
 
 
 class Profile extends React.Component {
-  state = { editing: false, formValues: { name: '', email: '', file: '', }, };
+  state = { editing: false, formValues: { favorite: '', email: '', file: '', }, };
 
   onDrop = (files) => {
     this.setState({ formValues: { ...this.state.formValues, file: files[0], } });
@@ -16,8 +16,8 @@ class Profile extends React.Component {
   
   
   componentDidMount() {
-    const { auth: { user: { name, email, }, }, } = this.props;
-    this.setState({ formValues: { name, email, }, });
+    const { auth: { user: { favorite, email, }, }, } = this.props;
+    this.setState({ formValues: { favorite, email, }, });
   }
   
   toggleEdit = () => {
@@ -38,9 +38,9 @@ class Profile extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { formValues: { name, email, file, }, } = this.state;
+    const { formValues: { favorite, email, file, }, } = this.state;
     const { auth: { user, updateUser, }, } = this.props;
-    updateUser(user.id, { name, email, file, });
+    updateUser(user.id, { favorite, email, file, });
     this.setState({
       editing: false,
       formValues: {
@@ -69,7 +69,7 @@ class Profile extends React.Component {
   
   editView = () => {
     const { auth: { user }, } = this.props;
-    const { formValues: { name, email } } = this.state;
+    const { formValues: { favorite, email } } = this.state;
     return (
       <Form onSubmit={this.handleSubmit}>
         <Grid.Column width={4}>
@@ -96,9 +96,9 @@ class Profile extends React.Component {
       </Grid.Column>
         <Grid.Column width={8}>
           <Form.Input
-            label="Name"
-            name="name"
-            value={name}
+            label="Your Pet"
+            name="favorite"
+            value={favorite}
             required
             onChange={this.handleChange}
           />
