@@ -9,6 +9,8 @@ class DogForm extends Component {
   state = {errors: {length: ''}, name: '', length: '', age: '', breed:''}
 
   componentDidMount() {
+    
+    
       if (this.props.id) {
           const { name, breed, age } = this.props
           this.setState({ name, breed, age})
@@ -20,6 +22,7 @@ class DogForm extends Component {
 
 
   handleSubmit = (e) => {
+    
     e.preventDefault()
     if (this.props.id) {
         this.props.updateDog(this.props.id, this.state, this.props.userId)

@@ -1,7 +1,7 @@
 class Api::DogsController < ApplicationController
 
   before_action :set_user
-  before_action :set_dogs, only: [:show, :edit, :update, :destroy]
+  before_action :set_dog, only: [:show, :edit, :update, :destroy]
 
   def index
     render json: @user.dogs.all
@@ -17,9 +17,9 @@ class Api::DogsController < ApplicationController
   end
 
   def update
-    @dog = @user.dog.find(params[:id])
-    if @user.dog.update(@user.dog_params)
-      render json: @user.dog
+    @dog = @user.dogs.find(params[:id])
+    if @dog.update(dog_params)
+      render json: @dog
     else
       render json: { message: "Dogs, why do you want to change them?" }
     end
@@ -27,7 +27,7 @@ class Api::DogsController < ApplicationController
       
 
   def destroy
-    @user.dog.find(params[:id]).destroy
+    @user.dogs.find(params[:id]).destroy
     render json: { mesage: 'Dog Poof!'}
   end
   

@@ -22,7 +22,7 @@ class DogList extends Component {
     return (
       <>
         <Container>
-          <DogForm />
+          <DogForm userId={userId}/>
           <Grid columns={3}>
             <Grid.Row>
               <>

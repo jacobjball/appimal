@@ -11,7 +11,7 @@ import CatList from './components/cats/CatList';
 import ToyList from './components/toys/ToyList';
 import DogList from './components/dogs/DogList';
 import FoodList from './components/foods/FoodList';
-// import Profile from './components/Profile';
+import Profile from './components/Profile';
 
 
 const App = () => (
@@ -20,7 +20,7 @@ const App = () => (
     <FetchUser>
       <Switch>
         <ProtectedRoute exact path="/" component={Home} />
-        {/* <ProtectedRoute exact path="/profile" component={Profile} /> */}
+        <ProtectedRoute exact path="/profile" component={Profile} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/catlist" component={CatList} />

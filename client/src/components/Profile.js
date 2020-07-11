@@ -5,6 +5,8 @@ import Dropzone from 'react-dropzone';
 
 const defaultImage = 'https://d30y9cdsu7xlg0.cloudfront.net/png/15724-200.png';
 
+
+
 class Profile extends React.Component {
   state = { editing: false, formValues: { name: '', email: '', file: '', }, };
 
@@ -12,34 +14,6 @@ class Profile extends React.Component {
     this.setState({ formValues: { ...this.state.formValues, file: files[0], } });
   }
   
-  editView = () => {
-    const { auth: { user }, } = this.props;
-    const { formValues: { name, email, file, } } = this.state;
-    return (
-      <Form onSubmit={this.handleSubmit}>
-        <Grid.Column width={4}>
-          <Dropzone
-            onDrop={this.onDrop}
-            multiple={false}
-          >
-            {({ getRootProps, getInputProps, isDragActive }) => {
-              return (
-                <div
-                  {...getRootProps()}
-                  style={styles.dropzone}
-                >
-                  <input {...getInputProps()} />
-                  {
-                    isDragActive ?
-                      <p>Drop files here...</p> :
-                      <p>Try dropping some files here, or click to select files to upload.</p>
-                  }
-                </div>
-              )
-            }}
-          </Dropzone>
-        </Grid.Column>
-      <Grid.Column width={8}>
   
   componentDidMount() {
     const { auth: { user: { name, email, }, }, } = this.props;
@@ -61,6 +35,22 @@ class Profile extends React.Component {
       }
     })
   }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const { formValues: { name, email, file, }, } = this.state;
+    const { auth: { user, updateUser, }, } = this.props;
+    updateUser(user.id, { name, email, file, });
+    this.setState({
+      editing: false,
+      formValues: {
+        ...this.state.formValues,
+        file: "",
+      },
+    });
+  }
+
+ 
   
   profileView = () => {
     const { auth: { user }, } = this.props;
@@ -70,7 +60,7 @@ class Profile extends React.Component {
           <Image src={user.image || defaultImage} />
         </Grid.Column>
         <Grid.Column width={8}>
-          <Header as="h1">{user.name}</Header>
+          <Header as="h1">{user.favorite }</Header>
           <Header as="h1">{user.email}</Header>
         </Grid.Column>
       </Fragment>
@@ -79,33 +69,51 @@ class Profile extends React.Component {
   
   editView = () => {
     const { auth: { user }, } = this.props;
-    const { formValues: { name, email, file, } } = this.state;
+    const { formValues: { name, email } } = this.state;
     return (
       <Form onSubmit={this.handleSubmit}>
         <Grid.Column width={4}>
-          <Dropzone
-            onDrop={this.onDrop}
-            multiple={false}
-          >
-            {({ getRootProps, getInputProps, isDragActive }) => {
-              return (
-                <div
-                  {...getRootProps()}
-                  style={styles.dropzone}
-                >
-                  <input {...getInputProps()} />
-                  {
-                    isDragActive ?
-                      <p>Drop files here...</p> :
-                      <p>Try dropping some files here, or click to select files to upload.</p>
-                  }
-                </div>
-              )
-            }}
-          </Dropzone>
+        <Dropzone
+          onDrop={this.onDrop}
+          multiple={false}
+        >
+          {({ getRootProps, getInputProps, isDragActive }) => {
+            return (
+              <div
+                {...getRootProps()}
+                style={styles.dropzone}
+              >
+                <input {...getInputProps()} />
+                {
+                  isDragActive ?
+                    <p>Drop files here...</p> :
+                    <p>Try dropping some files here, or click to select files to upload.</p>
+                }
+              </div>
+            )
+          }}
+        </Dropzone>
+      </Grid.Column>
+        <Grid.Column width={8}>
+          <Form.Input
+            label="Name"
+            name="name"
+            value={name}
+            required
+            onChange={this.handleChange}
+          />
+          <Form.Input
+            label="Email"
+            name="email"
+            value={email}
+            required
+            onChange={this.handleChange}
+          />
+          <Button>Update</Button>
         </Grid.Column>
-      <Grid.Column width={8}>
-  
+      </Form>
+    )
+  }
   
   render() {
     const { editing, } = this.state;

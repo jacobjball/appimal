@@ -55,7 +55,7 @@ class DogProvider extends Component {
       deleteDog = (id, userId) => {
        
 
-        axios.delete(`/api/users/${userId}/${id}`)
+        axios.delete(`/api/users/${userId}/dogs/${id}`)
           .then( res => {
             const { dogs } = this.state
             this.setState({ dogs: dogs.filter( a => a.id !== id )})

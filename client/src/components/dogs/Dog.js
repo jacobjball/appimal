@@ -16,13 +16,12 @@ class Dog extends Component {
   render() { 
     const { id, name, breed, age, deleteDog, userId } = this.props
     const {editing} = this.state 
-    
     return (           
       <Card.Group>
       <Card>
         <Card.Content>
         { editing ? <DogForm id={id} name={name} breed={breed} age={age}
-            toggleEdit={this.toggleEdit} userId={userId}/> :
+            toggleEdit={this.toggleEdit} userId={this.props.userId}/> :
           <>
             <Card.Header>{name}</Card.Header>
             <Card.Meta>{breed} </Card.Meta>
@@ -40,7 +39,7 @@ class Dog extends Component {
           <Button basic color='blue' onClick={this.toggleEdit}>
             Edit
           </Button>
-          <Button basic color='red' onClick={() => deleteDog(id, userId)} >
+          <Button basic color='red' onClick={() => deleteDog(id, this.props.userId)} >
             Delete
           </Button>
         </Card.Content>
