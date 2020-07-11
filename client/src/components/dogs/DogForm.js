@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import { Form, Dropdown } from 'semantic-ui-react';
 import { DogConsumer } from '../../providers/DogProvider';
-
+import { AuthConsumer }  from '../../providers/AuthProvider';
 
 
 class DogForm extends Component {
 
-  state = {errors: {length: ''}, name: '', length: '', date: '', time: '', address: '', phone: ''}
+  state = {errors: {length: ''}, name: '', length: '', age: '', breed:''}
 
   componentDidMount() {
       if (this.props.id) {
-          const { name, breed, cost } = this.props
-          this.setState({ name, breed, cost})
+          const { name, breed, age } = this.props
+          this.setState({ name, breed, age})
       }
   }
 
@@ -22,13 +22,13 @@ class DogForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
     if (this.props.id) {
-        this.props.updateDog(this.props.id, this.state)
+        this.props.updateDog(this.props.id, this.state, this.props.userId)
         this.props.toggleEdit()
 
     } else { 
-    this.props.addDog(this.state)
+    this.props.addDog(this.state, this.props.userId)
     }
-    this.setState({name: '', cost: '', color: ''})
+    this.setState({name: '', breed: '', age: ''})
   }
 
   render() {

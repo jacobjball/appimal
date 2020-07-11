@@ -1,4 +1,4 @@
-import React, { Fragment, } from 'react';
+import React, { Fragment, Profiler, } from 'react';
 import Home from './components/Home';
 import NoMatch from './components/NoMatch';
 import Navbar from './components/Navbar';
@@ -11,6 +11,7 @@ import CatList from './components/cats/CatList';
 import ToyList from './components/toys/ToyList';
 import DogList from './components/dogs/DogList';
 import FoodList from './components/foods/FoodList';
+// import Profile from './components/Profile';
 
 
 const App = () => (
@@ -19,10 +20,11 @@ const App = () => (
     <FetchUser>
       <Switch>
         <ProtectedRoute exact path="/" component={Home} />
+        {/* <ProtectedRoute exact path="/profile" component={Profile} /> */}
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/catlist" component={CatList} />
-        <Route exact path="/doglist" component={DogList} />
+        <ProtectedRoute exact path="/doglist" component={DogList} />
         <Route exact path="/toylist" component={ToyList} />
         <Route exact path="/foodlist" component={FoodList} />
         <Route component={NoMatch} />

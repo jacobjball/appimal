@@ -11,10 +11,10 @@ class DogProvider extends Component {
 
     state = { dogs: [] }
 
-    componentDidMount() {
+    getDog = (userId) =>  {
 
-      const { auth: { user }} = this.props;
-      axios.get(`/api/users/${user.id}/dogs`)
+      
+      axios.get(`/api/users/${userId}/dogs`)
         .then( res => {
           this.setState({ dogs: res.data})
         })
@@ -23,8 +23,10 @@ class DogProvider extends Component {
         })
     }
 
-    addDog = (dog) => {
-        axios.post(`/api/users/${user.id}/dogs`, dog )
+    addDog = (dog, userId) => {
+      
+
+        axios.post(`/api/users/${userId}/dogs`, dog )
         .then( res => {
           const { dogs } = this.state
           this.setState({ dogs: [...dogs, res.data]})
@@ -34,8 +36,10 @@ class DogProvider extends Component {
         })
       }
 
-      updateDog = (id, dog) => {
-        axios.patch(`/api/users/${user.id}/dogs/${id}`, { dog })
+      updateDog = (id, dog, userId) => {
+       
+
+        axios.patch(`/api/users/${userId}/dogs/${id}`, { dog })
         .then( res => {
           const dogs = this.state.dogs.map( a => {
             if ( a.id === id ) {
@@ -48,8 +52,10 @@ class DogProvider extends Component {
         .catch(console.log)
       }
   
-      deleteCat = (id) => {
-        axios.delete(`/api/users/${user.id}/${id}`)
+      deleteDog = (id, userId) => {
+       
+
+        axios.delete(`/api/users/${userId}/${id}`)
           .then( res => {
             const { dogs } = this.state
             this.setState({ dogs: dogs.filter( a => a.id !== id )})
@@ -65,7 +71,8 @@ class DogProvider extends Component {
                 ...this.state, 
                 addDog: this.addDog, 
                 deleteDog: this.deleteDog,
-                updateDog: this.updateDog
+                updateDog: this.updateDog,
+                getDog: this.getDog
             }} >
                 
                 { this.props.children }</DogContext.Provider>
@@ -80,17 +87,5 @@ class DogProvider extends Component {
   
 
 }
+export default DogProvider;
 
-export class ConnectedDogProvider extends React.Component {
-  render() {
-    return (
-      <AuthConsumer> 
-        { auth => 
-          <DogProvider { ...this.props } auth={auth} />
-        }
-      </AuthConsumer>
-    )
-  }
-}
-
-export default withRouter(ConnectedDogProvider);

@@ -33,7 +33,7 @@ class FoodForm extends Component {
     this.props.addFood(this.state)
     }
     this.setState({name: ''})
-    this.props.toggleForm();
+   
   }
 
   render() {

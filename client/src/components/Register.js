@@ -28,6 +28,15 @@ class Register extends React.Component {
       <Segment basic>
         <Header as='h1' textAlign='center'>Register</Header>
         <Form onSubmit={this.handleSubmit}>
+        <Form.Input
+            label="DogName"
+            required
+            autoFocus
+            name='favorite'
+            value={favorite}
+            placeholder='Enter your dogs name'
+            onChange={this.handleChange}
+          />
           <Form.Input
             label="Email"
             required
@@ -55,15 +64,7 @@ class Register extends React.Component {
             type='password'
             onChange={this.handleChange}
           />
-          <Form.Input
-            label="Favorite"
-            required
-            autoFocus
-            name='favorite'
-            value={favorite}
-            placeholder='Name'
-            onChange={this.handleChange}
-          />
+         
           <Segment textAlign='center' basic>
             <Button primary type='submit'>Submit</Button>
           </Segment>

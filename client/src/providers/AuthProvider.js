@@ -4,7 +4,7 @@ import axios from "axios";
 const AuthContext = React.createContext();
 export const AuthConsumer = AuthContext.Consumer;
 
-export class AuthProvider extends React.Component {
+class AuthProvider extends React.Component {
   state = { user: null, };
 
   handleRegister = (user, history) => {
@@ -55,3 +55,5 @@ export class AuthProvider extends React.Component {
     )
   }
 };
+
+export default AuthProvider;

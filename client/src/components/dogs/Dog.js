@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Header, Card, Button } from 'semantic-ui-react';
 import DogForm from './DogForm';
 import { DogConsumer } from '../../providers/DogProvider';
-
+import { AuthConsumer }  from '../../providers/AuthProvider';
 
 
 class Dog extends Component {
@@ -14,7 +14,7 @@ class Dog extends Component {
   )
 
   render() { 
-    const { id, name, breed, age, deleteDog, } = this.props
+    const { id, name, breed, age, deleteDog, userId } = this.props
     const {editing} = this.state 
     
     return (           
@@ -22,7 +22,7 @@ class Dog extends Component {
       <Card>
         <Card.Content>
         { editing ? <DogForm id={id} name={name} breed={breed} age={age}
-            toggleEdit={this.toggleEdit}/> :
+            toggleEdit={this.toggleEdit} userId={userId}/> :
           <>
             <Card.Header>{name}</Card.Header>
             <Card.Meta>{breed} </Card.Meta>
@@ -40,7 +40,7 @@ class Dog extends Component {
           <Button basic color='blue' onClick={this.toggleEdit}>
             Edit
           </Button>
-          <Button basic color='red' onClick={() => deleteDog(id)} >
+          <Button basic color='red' onClick={() => deleteDog(id, userId)} >
             Delete
           </Button>
         </Card.Content>
@@ -53,16 +53,14 @@ class Dog extends Component {
 }
 
 const ConnectedDog = (props) => (
-    <DogConsumer>
-        { value => (
-            <Dog
-            {...props }
-            deleteDog={value.deleteDog} 
-            // updateAppt={value.updateAppt}
-            />
-        )}
-    </DogConsumer>
+  <DogConsumer>
+      { value => (
+          <Dog
+          {...props }
+          deleteDog={value.deleteDog} 
+          // updateAppt={value.updateAppt}
+          />
+      )}
+  </DogConsumer>
 )
-
-
 export default ConnectedDog;
